@@ -14,12 +14,26 @@ git clone https://github.com/Yanshi04/codex-journal.git
 ```
 pip install -r requirements.txt
 ```
-3) Run
+3) Configuration
+This project requires a PostgreSQL database. 
+Please create a database named `codex_journal` and ensure your
+local credentials match the following (or update settings.py):
+
+Database Name: `codex_journal`
+
+User: `postgres`
+
+Password: `admin`
+4) Initialize
+
+```
+python manage.py migrate
+python manage.py createsuperuser
+```
+5) Run
 ```
 python manage.py runserver
 ```
-(Note: The project includes a pre-configured SQLite database with test data!)
-
 ## Administrative Access
 
 To access the "Archive" (Admin Panel):
