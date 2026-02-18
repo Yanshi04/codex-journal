@@ -24,7 +24,7 @@
   <p>{{monster.my_notes}}</p>
   <hr>
   <div class = "actions">
-    <button disabled>Edit(not done yet)</button>
+    <a href="{% url 'edit_monster' monster.pk %}"><button type= "button">Edit</button></a>
     <button disabled>Delete(not done yet)</button>
     <a href = "{% url 'bestiary_list' %}">Back to list</a>
   </div>

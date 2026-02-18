@@ -23,3 +23,15 @@ def monster_details(request, pk):
     monster = get_object_or_404(Monster, pk=pk)
     context = {'monster': monster}
     return render(request, 'bestiary/monster_details.html', context)
+
+def edit_monster(request, pk):
+    monster = get_object_or_404(Monster, pk=pk )
+    if request.method == 'POST':
+        form = MonsterForm(request.POST, instance = monster)
+        if form.is_valid():
+            form.save()
+            return redirect('monster_details', pk =monster.pk)
+    else:
+        form = MonsterForm(instance = monster)
+    context = {'form': form, 'monster': monster}
+    return render(request, 'bestiary/monster_edit.html', context)
