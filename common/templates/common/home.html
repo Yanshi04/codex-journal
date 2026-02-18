@@ -6,7 +6,8 @@
         <p>Currently, your bestiary is being updated... Add more of your adventures to save down information and use it when
         encountering the same beasts again!</p>
 
-        <a href="#">View Bestiary</a>
+        <a href="{% url 'bestiary_list' %}">View Bestiary</a>
+
     {% else %}
         <h1>Welcome to the Journal!</h1>
         <p>Use this archive to track beasts and learn how to defeat them!</p>
