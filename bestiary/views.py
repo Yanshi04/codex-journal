@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import MonsterForm
 from .models import Monster
@@ -18,3 +18,8 @@ def add_monster(request):
         form = MonsterForm()
     context = {'form': form}
     return render(request, 'bestiary/monster_create.html', context)
+
+def monster_details(request, pk):
+    monster = get_object_or_404(Monster, pk=pk)
+    context = {'monster': monster}
+    return render(request, 'bestiary/monster_details.html', context)

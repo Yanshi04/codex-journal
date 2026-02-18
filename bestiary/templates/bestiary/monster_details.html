@@ -1,0 +1,31 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+  <h1>{{monster.monster_name}}</h1>
+  {% if monster.image_url %}
+    <img src = "{{monster.image_url}}" alt = "{{monster.monster_name }}" style="max-width: 400px; border-radius: 10px;">
+  {% endif %}
+
+  <div class = "stats">
+    <p><strong>Danger Level:</strong> {{ monster.get_level_of_danger_display}}</p>
+    <p><strong>Kind:</strong> {{monster.kind.group_name}}</p>
+  </div>
+  <hr>
+  <h3>How To Win:</h3>
+  <ul>
+    {% for item in monster.what_to_use.all %}
+          {{ item.item_name }}
+        {% empty %}
+          <em>No known weaknesses. Good luck!</em>
+        {% endfor %}
+  </ul>
+
+  <h3>Notes:</h3>
+  <p>{{monster.my_notes}}</p>
+  <hr>
+  <div class = "actions">
+    <button disabled>Edit(not done yet)</button>
+    <button disabled>Delete(not done yet)</button>
+    <a href = "{% url 'bestiary_list' %}">Back to list</a>
+  </div>
+{%endblock%}

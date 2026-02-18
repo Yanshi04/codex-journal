@@ -8,7 +8,7 @@
     <div class = "monster-list">
         {% for monster in monsters %}
             <div class = "monster-card">
-                <h3>{{ monster.monster_name }}</h3>
+                <h3><a href="{% url 'monster_details' monster.pk %}">{{ monster.monster_name }}</a></h3>
                 <p><strong>Danger Level:</strong> {{monster.get_level_of_danger_display}}</p>
                 <p><strong>Class: </strong> {{monster.kind.group_name}}</p>
 
