@@ -1,0 +1,13 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+  <div class="form-container">
+    <h1>Create Your Hunter Profile!</h1>
+
+    <form method = "POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Start Journey</button>
+    </form>
+  </div>
+{% endblock %}
