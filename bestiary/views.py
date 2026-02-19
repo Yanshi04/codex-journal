@@ -35,3 +35,10 @@ def edit_monster(request, pk):
         form = MonsterForm(instance = monster)
     context = {'form': form, 'monster': monster}
     return render(request, 'bestiary/monster_edit.html', context)
+
+def delete_monster(request, pk):
+    monster = get_object_or_404(Monster, pk=pk)
+    if request.method == 'POST':
+        monster.delete()
+        return redirect('bestiary_list')
+    return render(request, 'bestiary/monster_confirm_delete.html', {'monster': monster})
