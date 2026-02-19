@@ -4,9 +4,9 @@
   {% if profile.profile_pic %}
     <img src = "{{profile.profile_pic}}" alt="Profile pic" style="width:150px;">
   {% endif %}
-  <p><strong>Name:</strong>{{profile.first_name}} {{profile.last_name}}</p>
-  <p><strong>Email:</strong>{{profile.email}}</p>
-  <p><strong>Bio:</strong>{{profile.bio|default:"This hunter has no stories to tell yet. Remind them to share more!"}}</p>
+  <p><strong>Name:</strong> {{profile.first_name}} {{profile.last_name}}</p>
+  <p><strong>Email:</strong> {{profile.email}}</p>
+  <p><strong>Bio:</strong> {{profile.bio|default:"This hunter has no stories to tell yet. Remind them to share more!"}}</p>
   <div class = "actions">
     <a href="{% url 'profile_edit' %}"><button type="button">Edit Profile</button></a>
     <a href="{% url 'profile_delete' %}"><button type="button">Delete Profile</button></a>
