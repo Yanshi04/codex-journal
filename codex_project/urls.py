@@ -24,3 +24,4 @@ urlpatterns = [
     path('bestiary/', include('bestiary.urls')),
 
 ]
+handler404 = 'common.views.custom_404'
