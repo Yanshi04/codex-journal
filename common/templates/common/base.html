@@ -7,8 +7,12 @@
 <body>
     <header>
         <nav>
-            <a href = "{% url 'home' %}">Home</a>
-            <a href = "/admin/">Archive</a>
+            <a href="{% url 'home' %}">Home</a>
+            {% if profile %}
+                <a href="{% url 'bestiary_list' %}">Bestiary</a>
+                <a href="{% url 'profile_details' %}">Profile</a>
+            {% endif %}
+            <a href="{% url 'admin:index' %}">Archive</a>
         </nav>
     </header>
 

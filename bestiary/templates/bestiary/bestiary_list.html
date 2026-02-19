@@ -3,6 +3,14 @@
 {% block content %}
     <h1>My Bestiary</h1>
     <a href = "{% url 'add_monster' %}">Record New Beast</a>
+    <form method="get" action="{% url 'bestiary_list' %}" class="sorting-form">
+    <label for="sort">Order by:</label>
+    <select name="sort" id="sort" onchange="this.form.submit()">
+        <option value="name_asc" {% if current_sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+        <option value="name_desc" {% if current_sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
+        <option value="danger" {% if current_sort == 'danger' %} selected {% endif %}>Danger Level (High to Low)</option>
+        </select>
+    </form>
     <hr>
 
     <div class = "monster-list">
