@@ -1,31 +1,37 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Codex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Witcher's Codex</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Georgia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
         <nav>
-            <a href="{% url 'home' %}">Home</a>
+            <a href="{%url 'home' %}">Home</a>
             {% if profile %}
                 <a href="{% url 'bestiary_list' %}">Bestiary</a>
                 <a href="{% url 'profile_details' %}">Profile</a>
             {% endif %}
-            <a href="{% url 'admin:index' %}">Archive</a>
+            <a href="{% url 'admin:index' %}">Elder's Archive (Admin Page)</a>
         </nav>
     </header>
 
-    <hr>
     <main>
         {% block content %}
         {% endblock %}
     </main>
 
-    <hr>
     <footer>
-        <p><i>The Witcher's journal codex, made easier for any traveler stumbling upon it, wishing to learn more
-            about any type of beast. A project made for Softuni's Django Course.</i></p>
+        <p><i>The Witcher's journal codex, made easier for any traveler stumbling upon it. <br>
+        A project made for Softuni's Django Course.</i></p>
     </footer>
+    <div class="medallion-sticker">
+        <img src="https://static.wikia.nocookie.net/witcher/images/4/4b/Wolf_School_medallion.png/revision/latest?cb=20151008164535" alt="Medallion">
+    </div>
 </body>
 </html>

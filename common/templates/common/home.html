@@ -1,19 +1,51 @@
 {% extends 'common/base.html' %}
 {% block content %}
+<div class="home-journal-page">
+    <div class="monster-detail-card" style="text-align: center;">
     {% if profile %}
-        <h1>Welcome back to the Journal, {{profile.first_name}} !</h1>
-        <p>Use this archive to track beasts and learn how to defeat them!</p>
-        <p>Currently, your bestiary is being updated... Add more of your adventures to save down information and use it when
-        encountering the same beasts again!</p>
+            <h1 class="beast-title">Welcome back to the Journal, {{profile.first_name}}!</h1>
+            <p>Use this archive to track beasts and learn how to defeat them.</p>
+            <div class="home-divider"></div>
+            <p>Add more of your adventures to save down information and use it when encountering the same beasts again!</p>
+            <h3 class="recent-notes-title">Recent Field Notes</h3>
+            {% if recent_monsters %}
+                <ul class="recent-notes-list">
+                    {% for monster in recent_monsters %}
+                    <li>
+                        <span class="recent-beast-name">{{ monster.monster_name }}</span>
+                        <span style="font-style: italic;">{{ monster.kind.group_name }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No beasts recorded yet. Time to hit the Path!</p>
+            {% endif %}
+        {% else %}
+            <h1 class="beast-title">Welcome to the Journal!</h1>
+            <p>Use this archive to track monsters and learn how to defeat them.</p>
+            <div class="home-divider"></div>
+            <p>To start your adventure, please create your hunter profile.</p>
+            <div class="actions" style="border: none; justify-content: center;">
+                <a href="{% url 'create profile' %}"><button type="button">Create Profile</button></a>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
-        <a href="{% url 'bestiary_list' %}">View Bestiary</a>
-
-    {% else %}
-        <h1>Welcome to the Journal!</h1>
-        <p>Use this archive to track beasts and learn how to defeat them!</p>
-        <p>To start your adventure, please create your hunter profile.</p>
-
-        <a href = "{% url 'create profile' %}">Create Profile</a>
-    {% endif %}
-
+{% if profile %}
+<aside class="fixed-sidebar">
+    <div class="monster-detail-card stats-card" style="text-align: center;">
+        <h3 class="beast-title" style="font-size: 1.2rem; margin-bottom: 10px;">Stats</h3>
+        <div class="stat-item">
+            <span class="stat-number">{{ total_monsters }}</span>
+            <span class="stat-label">Monsters Tracked</span>
+        </div>
+        <div class="home-divider" style="width: 60%;"></div>
+        <p style="font-style: italic; font-size: 0.8rem; margin: 0;">"A Witcher's work is never done."</p>
+    </div>
+</aside>
+{% endif %}
+<div class="medallion-sticker">
+    <img src="https://static.wikia.nocookie.net/witcher/images/4/4b/Wolf_School_medallion.png/revision/latest?cb=20151008164535" alt="Medallion">
+</div>
 {% endblock %}
