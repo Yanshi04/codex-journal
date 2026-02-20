@@ -1,0 +1,79 @@
+[
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 1,
+    "fields": {
+        "group_name": "Undead"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 2,
+    "fields": {
+        "group_name": "Cursed"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 3,
+    "fields": {
+        "group_name": "Elemental"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 4,
+    "fields": {
+        "group_name": "Cursed Ones"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 5,
+    "fields": {
+        "group_name": "Draconids"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 6,
+    "fields": {
+        "group_name": "Hybrids"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 7,
+    "fields": {
+        "group_name": "Insectoids"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 8,
+    "fields": {
+        "group_name": "Ogroids"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 9,
+    "fields": {
+        "group_name": "Relicts"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 10,
+    "fields": {
+        "group_name": "Vampires"
+    }
+},
+{
+    "model": "bestiary.beastsgroup",
+    "pk": 11,
+    "fields": {
+        "group_name": "Specters"
+    }
+}
+]

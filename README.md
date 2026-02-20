@@ -11,52 +11,56 @@ To run the project locally, please follow these steps:
 ```
 git clone https://github.com/Yanshi04/codex-journal.git
 ```
-2) **Dependencies**
+2) **Create and activate virtual environment**
+
+    ```
+    python -m venv venv
+    ```
+Windows:
+    ```
+    venv\Scripts\activate
+    ```
+
+Mac/Linux:
+    ```
+    source venv/bin/activate
+    ```
+
+3) **Dependencies**
 ```
 pip install -r requirements.txt
 ```
-3) **Configuration**
+4) **Configuration**
 
 This project requires a PostgreSQL database. 
-Please create a database named `codex_journal` and ensure your
-local credentials match the following (or update settings.py):
 
-Database Name: `codex_journal`
+Copy the .env.example file to a new file named .env.
 
-User: `postgres`
+Update the variables in .env with your local PostgreSQL 
+credentials (DB_NAME, DB_USER, DB_PASSWORD).
 
-Password: `admin`
-
-4) **Initialize**
+5) **Initialize**
 
 ```
 python manage.py migrate
+python manage.py loaddata initial_data.json
 python manage.py createsuperuser
 ```
-**IMPORTANT:** Because this project uses dynamic database relationships, 
-you must add initial categories before creating your first Monster.
-1. Run the server and navigate to `http://127.0.0.1:8000/admin`
-2. Log in with your superuser credentials.
-3. Add at least one item to **"Beasts groups"** (for example Cursed Ones, 
-Relicts).
-4. Add at least one item to **"How to wins"** (for example Silver Sword,
-Steel Sword).
-5. You can now return to the home page and fully use the Bestiary!
+Note: loaddata automatically populates the required Beast Groups and 
+Combat Vulnerabilities so you can use the Bestiary immediately.
 
-
-5) **Run**
+6) **Run**
 ```
 python manage.py runserver
 ```
 ## Administrative Access
 
-To access the "Archive" (Admin Panel):
+To access the "Archive" (Admin Page):
 
 URL: `http://127.0.0.1:8000/admin/`
 
-Username: admin
-
-Password: Softuni123!
+Access: Log in with the superuser credentials you 
+made in the initialize step.
 
 ## Features
 Public Interface: View the home page and bestiary.
@@ -73,3 +77,10 @@ Custom Error Handling: A Witcher-themed 404 error page for wandering travelers.
 
 Relational Database: Utilizes PostgreSQL with One-To-Many and Many-To-Many relationships for monster categorization and
 combat vulnerabilities.
+
+## Project Structure
+common: handles landing page, base templates, and global navigation.
+
+profiles: manages Hunter Profile data and associated forms.
+
+bestiary: core logic for monster records, category management, and combat data.
