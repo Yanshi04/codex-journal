@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import MonsterForm
+from .forms import MonsterForm, MonsterDeleteForm
 from .models import Monster
 from profiles.models import Profile
 
@@ -56,4 +56,5 @@ def delete_monster(request, pk):
     if request.method == 'POST':
         monster.delete()
         return redirect('bestiary_list')
-    return render(request, 'bestiary/monster_confirm_delete.html', {'monster': monster, 'profile': profile})
+    form = MonsterDeleteForm(instance = monster)
+    return render(request, 'bestiary/monster_confirm_delete.html', {'monster': monster, 'profile': profile, 'form': form})
