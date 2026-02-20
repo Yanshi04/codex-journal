@@ -1,0 +1,11 @@
+<div class="monster-card">
+    <h3><a href="{% url 'monster_details' monster.pk %}">{{ monster.monster_name }}</a></h3>
+    <p><strong>Danger Level:</strong> {{ monster.get_level_of_danger_display}}</p>
+    <p><strong>Class: </strong> {{ monster.kind.group_name|runeify }}</p>
+
+    {%if monster.image_url %}
+        <img src="{{monster.image_url}}" alt="{{monster.monster_name}}" style="max-width:300px;">
+    {% endif %}
+
+    <p><em>{{ monster.my_notes|truncatewords:20 }}</em></p>
+</div>
