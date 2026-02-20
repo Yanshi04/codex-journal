@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<nav>
+    <a href="{%url 'home' %}">Home</a>
+    {% if profile %}
+        <a href="{% url 'bestiary_list' %}">Bestiary</a>
+        <a href="{% url 'profile_details' %}">Profile</a>
+    {% endif %}
+    <a href="{% url 'admin:index' %}">Elder's Archive (Admin Page)</a>
+</nav>

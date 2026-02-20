@@ -1,3 +1,4 @@
+{% load codex_extras %}
 <div class="monster-card">
     <h3><a href="{% url 'monster_details' monster.pk %}">{{ monster.monster_name }}</a></h3>
     <p><strong>Danger Level:</strong> {{ monster.get_level_of_danger_display}}</p>

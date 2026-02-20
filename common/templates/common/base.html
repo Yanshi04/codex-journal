@@ -11,14 +11,7 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="{%url 'home' %}">Home</a>
-            {% if profile %}
-                <a href="{% url 'bestiary_list' %}">Bestiary</a>
-                <a href="{% url 'profile_details' %}">Profile</a>
-            {% endif %}
-            <a href="{% url 'admin:index' %}">Elder's Archive (Admin Page)</a>
-        </nav>
+        {% include 'common/partials/nav.html' %}
     </header>
 
     <main>
@@ -26,10 +19,7 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <p><i>The Witcher's journal codex, made easier for any traveler stumbling upon it. <br>
-        A project made for Softuni's Django Course.</i></p>
-    </footer>
+    {% include 'common/partials/footer.html' %}
     <div class="medallion-sticker">
         <img src="https://static.wikia.nocookie.net/witcher/images/4/4b/Wolf_School_medallion.png/revision/latest?cb=20151008164535" alt="Medallion">
     </div>
