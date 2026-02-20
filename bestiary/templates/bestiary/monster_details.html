@@ -1,31 +1,43 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-  <h1>{{monster.monster_name}}</h1>
-  {% if monster.image_url %}
-    <img src = "{{monster.image_url}}" alt = "{{monster.monster_name }}" style="max-width: 400px; border-radius: 10px;">
-  {% endif %}
+<div class="monster-detail-card">
+  <h1 class ="beast-title">{{monster.monster_name}}</h1>
+  <div class="detail-layout">
+      {% if monster.image_url %}
+        <div class="image-frame">
+          <img src = "{{monster.image_url}}" alt ="{{monster.monster_name }}">
+        </div>
+      {% endif %}
 
-  <div class = "stats">
-    <p><strong>Danger Level:</strong> {{ monster.get_level_of_danger_display}}</p>
-    <p><strong>Kind:</strong> {{monster.kind.group_name}}</p>
-  </div>
-  <hr>
-  <h3>How To Win:</h3>
-  <ul>
-    {% for item in monster.what_to_use.all %}
-          {{ item.item_name }}
-        {% empty %}
-          <em>No known weaknesses. Good luck!</em>
-        {% endfor %}
-  </ul>
+      <div class = "stats">
+        <h3>Report:</h3>
+        <p><strong>Classification:</strong> {{ monster.kind.group_name }}</p>
+        <p><strong>Threat Level:</strong> <span class="danger-{{ monster.level_of_danger }}">{{ monster.get_level_of_danger_display }}</span></p>
 
-  <h3>Notes:</h3>
-  <p>{{monster.my_notes}}</p>
-  <hr>
-  <div class = "actions">
-    <a href="{% url 'edit_monster' monster.pk %}"><button type= "button">Edit</button></a>
-    <a href="{% url 'delete_monster' monster.pk %}"><button type="button">Delete</button></a>
-    <a href = "{% url 'bestiary_list' %}">Back to list</a>
+        <hr class="ink-line">
+
+        <h3>Vulnerabilities:</h3>
+          <ul class="weakness-list">
+            {% for item in monster.what_to_use.all %}
+                  {{ item.item_name }}
+                {% empty %}
+                  <em>No known weaknesses. Good luck!</em>
+                {% endfor %}
+          </ul>
+      </div>
   </div>
+
+  <div class="beast-notes">
+        <h3>Hunter's Notes:</h3>
+        <p>{{ monster.my_notes }}</p>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'edit_monster' monster.pk %}"><button type="button" class="btn-edit">Edit Entry</button></a>
+        <a href="{% url 'delete_monster' monster.pk %}"><button type="button" class="btn-delete">Destroy Record</button></a>
+
+        <a href="{% url 'bestiary_list' %}" class="cancel-link">Return to Bestiary</a>
+    </div>
+</div>
 {%endblock%}

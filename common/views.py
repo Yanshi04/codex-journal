@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from profiles.models import Profile
+from bestiary.models import Monster
 
 def home_page(request):
     profile = Profile.objects.first()
+    recent_monsters = Monster.objects.all().order_by('-id')[:3]
+    total_monsters = Monster.objects.count()
     context = {
-        'profile': profile
+        'profile': profile,
+        'recent_monsters': recent_monsters,
+        'total_monsters': total_monsters
     }
     return render(request, 'common/home.html', context)
 

@@ -1,14 +1,14 @@
 {% extends 'common/base.html' %}
 {% block content %}
-  <div class = "form-container">
-    <h1>Record a new Beast</h1>
-
-    <form method = "POST">
+<div class="monster-detail-card">
+    <h1 class="beast-title">Record a new Beast</h1>
+    <form method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type = "submit">Save Entry</button>
+      <div class="actions">
+          <button type="submit">Save Entry</button>
+          <a href="{% url 'bestiary_list' %}" class="cancel-link">Cancel</a>
+      </div>
     </form>
-
-    <a href = "{% url 'bestiary_list' %}">Cancel</a>
-  </div>
+</div>
 {% endblock %}
