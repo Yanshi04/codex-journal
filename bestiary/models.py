@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 def validate_letters_and_spaces(value):
     if not value.replace(' ', '').isalpha():
-        raise ValidationError('A true Witcher knows that beast names cannot contain numbers or symbols!')
+        raise ValidationError('A true witcher knows that beast names cannot contain numbers or symbols!')
 
 
 class BeastsGroup(models.Model):
@@ -22,8 +22,8 @@ class Monster(models.Model):
     my_notes = models.TextField()
     level_of_danger = models.PositiveIntegerField(choices = DANGER_CHOICES)
     image_url = models.URLField(blank = True, null =True)
-    kind = models.ForeignKey(BeastsGroup, on_delete = models.CASCADE)
-    what_to_use = models.ManyToManyField(HowToWin)
+    kind = models.ForeignKey(BeastsGroup, on_delete = models.CASCADE, related_name = 'monsters')
+    what_to_use = models.ManyToManyField(HowToWin, related_name = 'monsters')
 
     def __str__(self):
         return self.monster_name

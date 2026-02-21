@@ -1,7 +1,7 @@
 {% extends 'common/base.html' %}
 {% block content %}
 <div class="monster-detail-card"> <h1 class="beast-title">Retire from hunting?</h1>
-  <p>Are you sure you want to delete your profile, <strong>{{profile.first_name}}</strong>? This will remove your status as a hunter.</p>
+  <p>Are you sure you want to delete your profile, <strong>{{profile.first_name}}</strong>? This will remove your status as a hunter and all your monster records.</p>
   <form method="POST">
     {% csrf_token %}
     <div class="actions"> <button type="submit" class="btn-delete">Confirm Delete</button>

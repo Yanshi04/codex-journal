@@ -9,7 +9,7 @@ class ProfileCreateForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs = {'placeholder': 'Please input your first name'}),
             'last_name': forms.TextInput(attrs = {'placeholder': 'Please input your last name'}),
-            'bio': forms.Textarea(attrs={'placeholder': 'Tell your story...', 'rows': 3}),
+            'bio': forms.Textarea(attrs={'placeholder': 'Tell us your story...', 'rows': 3}),
 
         }
 

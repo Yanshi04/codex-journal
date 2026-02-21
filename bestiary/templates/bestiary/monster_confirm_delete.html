@@ -1,11 +1,28 @@
 {% extends 'common/base.html' %}
 {% block content %}
-    <h1>Delete Monster: {{monster.monster_name}}</h1>
-    <p>Are you certain you want to delete this entry from the Codex? That action can't be undone.</p>
+<div class="monster-detail-card">
+    <h1 class="beast-title">Delete Monster: {{ monster.monster_name }}</h1>
+    {% if monster.image_url %}
+        <div class="image-frame">
+            <img src="{{ monster.image_url }}" alt="{{ monster.monster_name }}" style = "max-width: 500px;">
+        </div>
+    {% endif %}
+    <div class="stats" style="margin-bottom: 20px;">
+        <p><strong>Classification:</strong> {{ monster.kind.group_name }}</p>
+        <p><strong>Threat Level:</strong> {{ monster.get_level_of_danger_display }}</p>
+        <p><strong>Your Notes:</strong> <em>{{ monster.my_notes }}</em></p>
+    </div>
+
+    <hr class="ink-line">
+    <p style="margin-top: 20px; font-weight: bold; color: #8b0000;">
+        Are you certain you want to delete this entry from the Codex? That action can't be undone.
+    </p>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Yes, delete</button>
-        <a href="{% url 'monster_details' monster.pk %}">Cancel</a>
+        <div class="actions">
+            <button type="submit" class="btn-delete">Yes, destroy record</button>
+            <a href="{% url 'monster_details' monster.pk %}" class="cancel-link">Cancel</a>
+        </div>
     </form>
-{%endblock%}
+</div>
+{% endblock %}

@@ -1,45 +1,41 @@
-from django.shortcuts import render, redirect
-from .forms import ProfileCreateForm
+# from django.shortcuts import render, redirect
+# from .forms import ProfileCreateForm
+# from .models import Profile
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from .models import Profile
+from .forms import ProfileCreateForm
+from bestiary.models import Monster
 
-def create_profile(request):
-    if request.method == 'POST':
-        form = ProfileCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = ProfileCreateForm()
+class MakeProfile(CreateView):
+    model = Profile
+    form_class = ProfileCreateForm
+    template_name = 'profiles/profile-create.html'
+    success_url = reverse_lazy('home')
 
-    context = {
-        'form': form
-    }
+class ViewMyProfile(DetailView):
+    template_name = 'profiles/profile-details.html'
+    def get_object(self, queryset=None):
+        my_profile = Profile.objects.first()
+        return my_profile
 
-    return render(request, 'profiles/profile-create.html', context)
+class ChangeMyProfile(UpdateView):
+    form_class = ProfileCreateForm
+    template_name = 'profiles/profile-edit.html'
+    success_url = reverse_lazy('profile_details')
 
-def profile_details(request):
-    profile=Profile.objects.first()
-    context = {'profile': profile}
-    return render(request, 'profiles/profile-details.html', context)
+    def get_object(self, queryset=None):
+        my_profile = Profile.objects.first()
+        return my_profile
 
-def profile_edit(request):
-    profile=Profile.objects.first()
-    if request.method == 'POST':
-        form = ProfileCreateForm(request.POST, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profile_details')
-    else:
-        form = ProfileCreateForm(instance=profile)
+class RemoveMyProfile(DeleteView):
+    template_name = 'profiles/profile-delete.html'
+    success_url = reverse_lazy('home')
 
-    context = {'form': form, 'profile': profile}
-    return render(request, 'profiles/profile-edit.html', context)
+    def get_object(self, queryset=None):
+        my_profile = Profile.objects.first()
+        return my_profile
 
-def profile_delete(request):
-    profile=Profile.objects.first()
-    if request.method == 'POST':
-        profile.delete()
-        return redirect('home')
-
-    context = {'profile': profile}
-    return render(request, 'profiles/profile-delete.html', context)
+    def form_valid(self, form):
+        Monster.objects.all().delete()
+        return super().form_valid(form)

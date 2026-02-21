@@ -24,9 +24,9 @@
             <h1 class="beast-title">Welcome to the Journal!</h1>
             <p>Use this archive to track monsters and learn how to defeat them.</p>
             <div class="home-divider"></div>
-            <p>To start your adventure, please create your hunter profile.</p>
+            <p>To start your adventure, please create your hunter profile. You will not be able to access the bestiary and profile section without one.</p>
             <div class="actions" style="border: none; justify-content: center;">
-                <a href="{% url 'create profile' %}"><button type="button">Create Profile</button></a>
+                <a href="{% url 'profile_create' %}"><button type="button">Create Profile</button></a>
             </div>
         {% endif %}
     </div>

@@ -1,60 +1,51 @@
-from django.shortcuts import render, redirect, get_object_or_404
-
-from .forms import MonsterForm, MonsterDeleteForm
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from .forms import MonsterForm
 from .models import Monster
-from profiles.models import Profile
+# from profiles.models import Profile
+# from django.shortcuts import render, redirect, get_object_or_404
 
-def bestiary_list(request):
-    sort_by = request.GET.get('sort', 'name_asc')
-    if sort_by == 'name_desc':
-        all_monsters = Monster.objects.all().order_by('-monster_name')
-    elif sort_by == 'danger':
-        all_monsters = Monster.objects.all().order_by('-level_of_danger')
-    else:
-        # Default: Name A-Z
-        all_monsters = Monster.objects.all().order_by('monster_name')
+class ShowAllMonsters(ListView):
+    model = Monster
+    template_name = 'bestiary/bestiary_list.html'
+    context_object_name = 'monsters'
 
-    profile = Profile.objects.first()
+    def get_queryset(self):
+        all_beasts = Monster.objects.all()
+        user_choice = self.request.GET.get('sort')
+        if user_choice == 'name_desc':
+            all_beasts = all_beasts.order_by('-monster_name')
+        elif user_choice == 'danger':
+            all_beasts = all_beasts.order_by('-level_of_danger')
+        else:
+            all_beasts = all_beasts.order_by('monster_name')
+        return all_beasts
 
-    context = {'monsters': all_monsters, 'profile': profile, 'current_sort': sort_by}
-    return render(request, 'bestiary/bestiary_list.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_sort'] = self.request.GET.get('sort', 'name_asc')
+        return context
 
-def add_monster(request):
-    profile = Profile.objects.first()
-    if request.method == 'POST':
-        form = MonsterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('bestiary_list')
-    else:
-        form = MonsterForm()
-    context = {'form': form, 'profile': profile}
-    return render(request, 'bestiary/monster_create.html', context)
 
-def monster_details(request, pk):
-    profile = Profile.objects.first()
-    monster = get_object_or_404(Monster, pk=pk)
-    context = {'monster': monster, 'profile': profile}
-    return render(request, 'bestiary/monster_details.html', context)
+class CreateMonsterPage(CreateView):
+    model = Monster
+    form_class = MonsterForm
+    template_name = 'bestiary/monster_create.html'
+    success_url = reverse_lazy('bestiary_list')
 
-def edit_monster(request, pk):
-    monster = get_object_or_404(Monster, pk=pk )
-    profile = Profile.objects.first()
-    if request.method == 'POST':
-        form = MonsterForm(request.POST, instance = monster)
-        if form.is_valid():
-            form.save()
-            return redirect('monster_details', pk =monster.pk)
-    else:
-        form = MonsterForm(instance = monster)
-    context = {'form': form, 'monster': monster, 'profile': profile}
-    return render(request, 'bestiary/monster_edit.html', context)
+class MonsterDetailsPage(DetailView):
+    model = Monster
+    template_name = 'bestiary/monster_details.html'
 
-def delete_monster(request, pk):
-    monster = get_object_or_404(Monster, pk=pk)
-    profile = Profile.objects.first()
-    if request.method == 'POST':
-        monster.delete()
-        return redirect('bestiary_list')
-    form = MonsterDeleteForm(instance = monster)
-    return render(request, 'bestiary/monster_confirm_delete.html', {'monster': monster, 'profile': profile, 'form': form})
+class EditMonsterPage(UpdateView):
+    model = Monster
+    form_class = MonsterForm
+    template_name = 'bestiary/monster_edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('monster_details', kwargs={'pk': self.object.pk})
+
+class DeleteMonsterPage(DeleteView):
+    model = Monster
+    template_name = 'bestiary/monster_confirm_delete.html'
+    success_url = reverse_lazy('bestiary_list')
