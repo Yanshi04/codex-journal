@@ -7,4 +7,5 @@ urlpatterns = [
     path('details/<int:pk>/', views.MonsterDetailsPage.as_view(), name='monster_details'),
     path('edit/<int:pk>/', views.EditMonsterPage.as_view(), name='edit_monster'),
     path('delete/<int:pk>/', views.DeleteMonsterPage.as_view(), name='delete_monster'),
+    path('download/', views.download_csv_data, name='download_csv'),
 ]

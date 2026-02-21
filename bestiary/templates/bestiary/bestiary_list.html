@@ -3,23 +3,59 @@
 
 {% block content %}
     <h1>My Bestiary</h1>
-    <a href = "{% url 'add_monster' %}">Record New Beast</a>
+
+    <div style="margin-bottom: 30px; display: flex; gap: 20px;">
+        <a href="{% url 'add_monster' %}" style="text-decoration: none;">
+            <button type="button" style="background-color: #4a3728;">Record New Beast</button>
+        </a>
+        <a href="{% url 'download_csv' %}" style="text-decoration: none;">
+            <button type="button" style="background-color: #4a3728;">Download All Monster Data</button>
+        </a>
+    </div>
+
     <form method="get" action="{% url 'bestiary_list' %}" class="sorting-form">
-    <label for="sort">Order by:</label>
-    <select name="sort" id="sort" onchange="this.form.submit()">
-        <option value="name_asc" {% if current_sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
-        <option value="name_desc" {% if current_sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
-        <option value="danger" {% if current_sort == 'danger' %} selected {% endif %}>Danger Level (High to Low)</option>
-        </select>
+        <div style="display: flex; align-items: flex-end; gap: 15px; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center;">
+                <input type="text"
+                       name="search_word"
+                       placeholder="Search monster name..."
+                       value="{{ search_word }}"
+                       style="padding: 5px; border: 2px solid #4a3728; border-right: none; border-top-left-radius: 4px; border-bottom-left-radius: 4px; height: 40px; box-sizing: border-box;">
+
+                <button type="submit" style="background-color: #8b0000; color: white; height: 40px; padding: 0 15px; border: 2px solid #4a3728; border-top-right-radius: 4px; border-bottom-right-radius: 4px; cursor: pointer; box-sizing: border-box;">
+                    Track
+                </button>
+            </div>
+
+            <div style="border-left: 2px solid #4a3728; height: 30px; opacity: 0.2;"></div>
+
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+                <label style="font-size: 0.8em; font-weight: bold;">ORDER BY:</label>
+                <select name="sort" id="sort" onchange="this.form.submit()" style="height: 40px; border: 2px solid #4a3728; border-radius: 4px; background-color: #f4ecd8; box-sizing: border-box;">
+                    <option value="name_asc" {% if current_sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+                    <option value="name_desc" {% if current_sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
+                    <option value="danger" {% if current_sort == 'danger' %} selected {% endif %}>Danger Level (High to Low)</option>
+                </select>
+            </div>
+        </div>
+
+        {% if search_word or current_sort != 'name_asc' %}
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'bestiary_list' %}" style="color: #8b0000; font-size: 0.9em; text-decoration: underline;">
+                    Clear filters
+                </a>
+            </div>
+        {% endif %}
     </form>
+
     <hr>
 
-    <div class = "monster-list">
+    <div class="monster-list">
         {% for monster in monsters %}
             {% include 'bestiary/partials/monster_card.html' with monster=monster %}
             <hr>
         {% empty %}
-            <p>No beasts have been recorded yet. The world is safe... for now.</p>
+            <p>No beasts found matching your search. The world is safe... for now.</p>
         {% endfor %}
     </div>
 {% endblock %}

@@ -7,7 +7,7 @@ class Profile(models.Model):
     profile_pic = models.URLField(
         null = True,
         blank = True,
-        help_text = "Please provide an URL for your profile picture"
+        help_text = "If you wish to add a profile pic for your profile, please add a link above."
     )
     bio = models.TextField(null = True, blank = True)
 
