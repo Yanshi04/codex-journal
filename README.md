@@ -78,6 +78,9 @@ Custom Error Handling: A Witcher-themed 404 error page for wandering travelers.
 Relational Database: Utilizes PostgreSQL with One-To-Many and Many-To-Many relationships for monster categorization and
 combat vulnerabilities.
 
+## Django Advanced Expansion
+Upgrading the project to include extended user models, REST APIs, and asynchronous tasks.
+
 ## Project Structure
 common: handles landing page, base templates, and global navigation.
 
