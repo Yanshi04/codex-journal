@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, View
 from .forms import MonsterForm
 from .models import Monster
 import csv
@@ -59,20 +59,21 @@ class DeleteMonsterPage(DeleteView):
     success_url = reverse_lazy('bestiary_list')
 
 
-def download_csv_data(request):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="my_codex_records.csv"'
-    writer = csv.writer(response)
-    writer.writerow(['Beast Name', 'Classification', 'Danger Level', 'Hunter Notes'])
-    all_beasts = Monster.objects.all()
+class DownloadCSVView(View):
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="my_codex_records.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Beast Name', 'Classification', 'Danger Level', 'Hunter Notes'])
+        all_beasts = Monster.objects.all()
 
-    for beast in all_beasts:
-        name = beast.monster_name
-        group = beast.kind.group_name
-        danger = beast.get_level_of_danger_display()
-        notes = beast.my_notes
+        for beast in all_beasts:
+            name = beast.monster_name
+            group = beast.kind.group_name
+            danger = beast.get_level_of_danger_display()
+            notes = beast.my_notes
 
-        current_row = [name, group, danger, notes]
-        writer.writerow(current_row)
+            current_row = [name, group, danger, notes]
+            writer.writerow(current_row)
 
-    return response
+        return response
