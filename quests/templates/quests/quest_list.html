@@ -1,0 +1,44 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <h1 class="beast-title">Available Quests/Contracts</h1>
+
+    <div style="text-align: right; margin-bottom: 20px;">
+        <a href="{% url 'quest_create' %}" class="cancel-link" style="background-color: #8b0000;">+ New Quest</a>
+    </div>
+
+    {% for quest in quests %}
+        <div class="monster-detail-card" style="margin-bottom: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <h2 style="margin: 0;">{{ quest.title }}</h2>
+
+                {% if quest.is_completed %}
+                    <span style="color: green; font-family: 'MedievalSharp';">[ COMPLETED ]</span>
+                {% else %}
+                    <span style="color: #8b0000; font-family: 'MedievalSharp';">[ ACTIVE ]</span>
+                {% endif %}
+
+            </div>
+
+            <p style="margin: 20px 0; line-height: 1.6;">{{ quest.description }}</p>
+
+            <div style="margin-bottom: 20px;">
+
+                <label>Target(s):</label>
+                <span class="recent-beast-name">
+                    {% for monster in quest.monsters.all %}
+                        {{ monster.monster_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+
+            </div>
+
+            <div class="actions">
+                <a href="{% url 'quest_edit' quest.pk %}" class="cancel-link">Edit</a>
+                <a href="{% url 'quest_delete' quest.pk %}" class="btn-submit" style="text-decoration: none; background-color: #2c241e;">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p style="text-align: center;">No Quests found</p>
+    {% endfor %}
+{% endblock %}

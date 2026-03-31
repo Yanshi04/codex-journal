@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="monster-detail-card text-center" style="max-width: 400px; margin: 0 auto;">
+        <h2 class="beast-title">Delete this quest?</h2>
+        <p>Are you sure you want to delete <strong>{{ object.title }}</strong>?</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="actions" style="justify-content: center; border: none;">
+                <button type="submit" class="btn-submit">Yes, Delete</button>
+                <a href="{% url 'quest_list' %}" class="cancel-link">No, Keep it</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

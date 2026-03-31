@@ -2,6 +2,7 @@
     <a href="{%url 'home' %}">Home</a>
     {% if profile %}
         <a href="{% url 'bestiary_list' %}">Bestiary</a>
+        <a href="{% url 'quest_list' %}">Quests</a>
         <a href="{% url 'profile_details' %}">Profile</a>
     {% endif %}
     <a href="{% url 'admin:index' %}">Elder's Archive (Admin Page)</a>

@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<style>
+    .monster-detail-card { text-align: left; }
+
+    form p { display: block; margin-bottom: 20px; }
+
+    form p:has(input[type="checkbox"]) {
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="checkbox"] {
+        width: auto !important;
+        margin-left: 10px;
+    }
+</style>
+    <h1 class="beast-title">New Quest</h1>
+
+    <div class="monster-detail-card" style="max-width: 600px; margin: 0 auto;">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="actions" style="justify-content: center; border: none;">
+                <button type="submit">Save</button>
+                <a href="{% url 'quest_list' %}" class="cancel-link" style="margin-left: 20px;">Return</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
