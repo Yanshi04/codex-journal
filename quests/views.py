@@ -2,6 +2,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Quest
+from profiles.models import Profile
 
 
 class QuestListView(ListView):
@@ -17,7 +18,7 @@ class QuestCreateView(CreateView):
     success_url = reverse_lazy('quest_list')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user.profile
+        form.instance.profile = Profile.objects.first()
         return super().form_valid(form)
 
 class QuestEditView(UpdateView):
