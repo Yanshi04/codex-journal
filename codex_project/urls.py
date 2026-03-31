@@ -23,6 +23,7 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('bestiary/', include('bestiary.urls')),
     path('quests/', include('quests.urls')),
+    path('accounts/', include('accounts.urls')),
 
 ]
 handler404 = 'common.views.custom_404'

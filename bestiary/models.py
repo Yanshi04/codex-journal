@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from profiles.models import Profile
 
 def validate_letters_and_spaces(value):
     if not value.replace(' ', '').isalpha():
@@ -22,6 +23,7 @@ class Monster(models.Model):
     my_notes = models.TextField()
     level_of_danger = models.PositiveIntegerField(choices = DANGER_CHOICES)
     image_url = models.URLField(blank = True, null =True)
+    hunter = models.ForeignKey(Profile, on_delete = models.CASCADE, related_name = 'monsters')
     kind = models.ForeignKey(BeastsGroup, on_delete = models.CASCADE, related_name = 'monsters')
     what_to_use = models.ManyToManyField(HowToWin, related_name = 'monsters')
 

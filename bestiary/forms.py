@@ -4,7 +4,7 @@ from .models import Monster
 class MonsterForm(forms.ModelForm):
     class Meta:
         model = Monster
-        fields = '__all__'
+        fields = ['monster_name', 'kind', 'level_of_danger', 'what_to_use', 'image_url', 'my_notes']
 
         widgets = {'my_notes': forms.Textarea(attrs={'placeholder': 'Write your observations about the beast you encountered...'}),
         'image_url': forms.URLInput(attrs={'placeholder': 'https://example.com/monster.jpg'})}

@@ -13,10 +13,14 @@ class MakeProfile(CreateView):
     template_name = 'profiles/profile-create.html'
     success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 class ViewMyProfile(DetailView):
     template_name = 'profiles/profile-details.html'
     def get_object(self, queryset=None):
-        my_profile = Profile.objects.first()
+        my_profile = self.request.user.profile
         return my_profile
 
 class ChangeMyProfile(UpdateView):
@@ -25,7 +29,7 @@ class ChangeMyProfile(UpdateView):
     success_url = reverse_lazy('profile_details')
 
     def get_object(self, queryset=None):
-        my_profile = Profile.objects.first()
+        my_profile = self.request.user.profile
         return my_profile
 
 class RemoveMyProfile(DeleteView):
@@ -33,9 +37,13 @@ class RemoveMyProfile(DeleteView):
     success_url = reverse_lazy('home')
 
     def get_object(self, queryset=None):
-        my_profile = Profile.objects.first()
+        my_profile = self.request.user.profile
         return my_profile
 
     def form_valid(self, form):
-        Monster.objects.all().delete()
-        return super().form_valid(form)
+        user = self.request.user
+        response = super().form_valid(form)
+        if user.is_authenticated:
+            user.delete()
+
+        return response

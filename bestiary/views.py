@@ -13,7 +13,7 @@ class ShowAllMonsters(ListView):
     context_object_name = 'monsters'
 
     def get_queryset(self):
-        all_beasts = Monster.objects.all()
+        all_beasts = Monster.objects.filter(hunter=self.request.user.profile)
         user_choice = self.request.GET.get('sort')
 
         search_word = self.request.GET.get('search_word')
@@ -41,6 +41,10 @@ class CreateMonsterPage(CreateView):
     template_name = 'bestiary/monster_create.html'
     success_url = reverse_lazy('bestiary_list')
 
+    def form_valid(self, form):
+        form.instance.hunter = self.request.user.profile
+        return super().form_valid(form)
+
 class MonsterDetailsPage(DetailView):
     model = Monster
     template_name = 'bestiary/monster_details.html'
@@ -65,7 +69,7 @@ class DownloadCSVView(View):
         response['Content-Disposition'] = 'attachment; filename="my_codex_records.csv"'
         writer = csv.writer(response)
         writer.writerow(['Beast Name', 'Classification', 'Danger Level', 'Hunter Notes'])
-        all_beasts = Monster.objects.all()
+        all_beasts = Monster.objects.filter(hunter = self.request.user.profile)
 
         for beast in all_beasts:
             name = beast.monster_name

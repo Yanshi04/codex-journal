@@ -1,9 +1,29 @@
-<nav>
-    <a href="{%url 'home' %}">Home</a>
-    {% if profile %}
-        <a href="{% url 'bestiary_list' %}">Bestiary</a>
-        <a href="{% url 'quest_list' %}">Quests</a>
-        <a href="{% url 'profile_details' %}">Profile</a>
-    {% endif %}
-    <a href="{% url 'admin:index' %}">Elder's Archive (Admin Page)</a>
+<nav style="display: flex; align-items: center; justify-content: space-between;">
+
+    <div style="display: flex; align-items: center;">
+        <a href="{% url 'home' %}">Home</a>
+
+        {% if request.user.is_authenticated %}
+            {% if profile %}
+                <a href="{% url 'bestiary_list' %}">Bestiary</a>
+                <a href="{% url 'quest_list' %}">Quests</a>
+                <a href="{% url 'profile_details' %}">Profile</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div style="display: flex; align-items: center;">
+        {% if request.user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}" style="margin: 0; padding: 0;" onsubmit="return confirm('Are you sure you want to leave the Path and log out?');">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: #e8d5b5; font-family: 'MedievalSharp', cursive; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; font-size: 1rem; box-shadow: none; padding: 0; margin-right: 20px;">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+
+        <a href="{% url 'admin:index' %}">Elder's Archive</a>
+    </div>
+
 </nav>

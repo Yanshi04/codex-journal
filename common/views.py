@@ -9,9 +9,19 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recent_monsters'] = Monster.objects.all().order_by('-id')[:3]
-        context['total_monsters'] = Monster.objects.count()
+        recent_monsters = []
+        total_monsters = 0
 
+        # when loged in
+        if self.request.user.is_authenticated and hasattr(self.request.user, 'profile'):
+            user_profile = self.request.user.profile
+            user_monsters = Monster.objects.filter(hunter = user_profile)
+
+            recent_monsters = user_monsters.order_by('-id')[:3]
+            total_monsters = user_monsters.count()
+
+        context['recent_monsters'] = recent_monsters
+        context['total_monsters'] = total_monsters
 
         return context
 
