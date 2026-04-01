@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Quest
 from profiles.models import Profile
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import QuestForm
 
 
 class QuestListView(ListView):
@@ -11,23 +13,34 @@ class QuestListView(ListView):
     context_object_name = 'quests'
 
 
-class QuestCreateView(CreateView):
+class QuestCreateView(LoginRequiredMixin, CreateView):
     model = Quest
+    form_class = QuestForm
     template_name = 'quests/quest_create.html'
-    fields = ['title', 'description', 'monsters', 'is_completed']
     success_url = reverse_lazy('quest_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['profile'] = self.request.user.profile
+        return kwargs
 
     def form_valid(self, form):
-        form.instance.profile = Profile.objects.first()
+        form.instance.profile = self.request.user.profile
         return super().form_valid(form)
 
-class QuestEditView(UpdateView):
+class QuestEditView(LoginRequiredMixin, UpdateView):
     model = Quest
+    form_class = QuestForm
     template_name = 'quests/quest_edit.html'
-    fields = ['title', 'description', 'monsters', 'is_completed']
+
     success_url = reverse_lazy('quest_list')
 
-class QuestDeleteView(DeleteView):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['profile'] = self.request.user.profile
+        return kwargs
+
+class QuestDeleteView(LoginRequiredMixin, DeleteView):
     model = Quest
     template_name = 'quests/quest_confirm_delete.html'
     success_url = reverse_lazy('quest_list')

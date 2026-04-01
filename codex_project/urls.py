@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,12 @@ urlpatterns = [
     path('bestiary/', include('bestiary.urls')),
     path('quests/', include('quests.urls')),
     path('accounts/', include('accounts.urls')),
+    path('armory/', include('armory.urls')),
 
+    path('api/token/', TokenObtainPairView.as_view(), name='jwt_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='jwt_refresh'),
 ]
+
 handler404 = 'common.views.custom_404'
+handler500 = 'common.views.custom_500'
+handler403 = 'common.views.custom_403'

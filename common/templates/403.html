@@ -1,0 +1,9 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <div style="text-align: center; margin-top: 100px;">
+        <h1>403: Access Denied</h1>
+        <p>Stop! This area is restricted to the owner or high-ranking members of the Lodges (very secret, sorceress club...)</p>
+        <p>You do not have enough mutagens to view this page.</p>
+        <a href="{% url 'home' %}" style="color: #8b0000; font-weight: bold;">Return to the Path</a>
+    </div>
+{% endblock %}

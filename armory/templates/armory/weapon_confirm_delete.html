@@ -1,0 +1,19 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-danger mb-3">
+        <div class="card-header bg-danger text-white">Confirm Destruction</div>
+        <div class="card-body">
+            <h5 class="card-title">Are you sure you want to destroy "{{ object.name }}"?</h5>
+            <p class="card-text">This action cannot be undone. The weapon will be lost forever.</p>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, destroy it</button>
+                <a href="{% url 'weapon_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

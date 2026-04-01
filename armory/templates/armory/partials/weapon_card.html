@@ -1,0 +1,19 @@
+{% load codex_extras %}
+<div class="weapon-card" style="border: 1px solid #4a3728; padding: 15px; margin-bottom: 10px; background-color: #f4ecd8;">
+    <h3>{{ weapon.name|runeify }}</h3>
+    <p><strong>Damage:</strong> {{ weapon.damage }}</p>
+    <p><strong>Owner:</strong> {{ weapon.owner.user.username }}</p>
+    <p><em>{{ weapon.description|default:"No description provided."|truncatewords:20 }}</em></p>
+
+    {% if request.user == weapon.owner.user %}
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+            <a href="{% url 'weapon_edit' weapon.pk %}">
+                <button type="button" style="background-color: #4a3728; color: white; border: none; padding: 5px 10px; cursor: pointer;">Reforge</button>
+            </a>
+
+            <a href="{% url 'weapon_delete' weapon.pk %}">
+                <button type="button" style="background-color: #8b0000; color: white; border: none; padding: 5px 10px; cursor: pointer;">Destroy</button>
+            </a>
+        </div>
+    {% endif %}
+</div>
