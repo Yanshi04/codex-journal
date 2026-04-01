@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .forms import WeaponForm, WeaponSearchForm
 from .models import Weapon
 
 class WeaponListView(ListView):
@@ -29,13 +31,14 @@ class WeaponListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['search_form'] = WeaponSearchForm(self.request.GET)
         context['search_word'] = self.request.GET.get('search_word', '')
         context['current_sort'] = self.request.GET.get('sort', 'name_asc')
         return context
 
 class WeaponCreateView(LoginRequiredMixin, CreateView):
     model = Weapon
-    fields = ['name', 'damage', 'description']
+    form_class = WeaponForm
     template_name = 'armory/weapon_form.html'
     success_url = reverse_lazy('weapon_list')
 
@@ -46,7 +49,7 @@ class WeaponCreateView(LoginRequiredMixin, CreateView):
 class WeaponUpdateView(LoginRequiredMixin, UpdateView):
     model = Weapon
 
-    fields = ['name', 'damage', 'description']
+    form_class = WeaponForm
     template_name = 'armory/weapon_form.html'
     success_url = reverse_lazy('weapon_list')
 

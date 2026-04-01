@@ -27,3 +27,11 @@ class CommonViewTests(TestCase):
     def test_home_page_template_used(self):
         response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'common/home.html')
+
+
+class MiddlewareTests(TestCase):
+    def test_witcher_audit_middleware_adds_header(self):
+        response = self.client.get(reverse('home'))
+
+        # check if the custom header exists in the response
+        self.assertEqual(response.get('X-Codex-Version'), '1.0-Witcher-Edition')

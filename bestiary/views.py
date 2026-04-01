@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, View
 from .forms import MonsterForm
@@ -7,7 +8,7 @@ from django.http import HttpResponse
 # from profiles.models import Profile
 # from django.shortcuts import render, redirect, get_object_or_404
 
-class ShowAllMonsters(ListView):
+class ShowAllMonsters(LoginRequiredMixin, ListView):
     model = Monster
     template_name = 'bestiary/bestiary_list.html'
     context_object_name = 'monsters'
@@ -35,7 +36,7 @@ class ShowAllMonsters(ListView):
         return context
 
 
-class CreateMonsterPage(CreateView):
+class CreateMonsterPage(LoginRequiredMixin, CreateView):
     model = Monster
     form_class = MonsterForm
     template_name = 'bestiary/monster_create.html'
@@ -45,11 +46,11 @@ class CreateMonsterPage(CreateView):
         form.instance.hunter = self.request.user.profile
         return super().form_valid(form)
 
-class MonsterDetailsPage(DetailView):
+class MonsterDetailsPage(LoginRequiredMixin, DetailView):
     model = Monster
     template_name = 'bestiary/monster_details.html'
 
-class EditMonsterPage(UpdateView):
+class EditMonsterPage(LoginRequiredMixin, UpdateView):
     model = Monster
     form_class = MonsterForm
     template_name = 'bestiary/monster_edit.html'
@@ -57,13 +58,13 @@ class EditMonsterPage(UpdateView):
     def get_success_url(self):
         return reverse_lazy('monster_details', kwargs={'pk': self.object.pk})
 
-class DeleteMonsterPage(DeleteView):
+class DeleteMonsterPage(LoginRequiredMixin, DeleteView):
     model = Monster
     template_name = 'bestiary/monster_confirm_delete.html'
     success_url = reverse_lazy('bestiary_list')
 
 
-class DownloadCSVView(View):
+class DownloadCSVView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="my_codex_records.csv"'
