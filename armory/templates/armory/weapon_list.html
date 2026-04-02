@@ -4,11 +4,13 @@
 {% block content %}
     <h1>The Armory</h1>
 
+    {% if perms.armory.add_weapon %}
     <div style="margin-bottom: 30px; display: flex; gap: 20px;">
         <a href="{% url 'weapon_create' %}" style="text-decoration: none;">
             <button type="button" style="background-color: #4a3728;">Add New Weapon</button>
         </a>
     </div>
+    {% endif %}
 
     <form method="get" action="{% url 'weapon_list' %}" class="sorting-form">
         <div style="display: flex; align-items: flex-end; gap: 15px; margin-bottom: 15px;">

@@ -3,9 +3,11 @@
 {% block content %}
     <h1 class="beast-title">Available Quests/Contracts</h1>
 
+    {% if perms.quests.add_quest %}
     <div style="text-align: right; margin-bottom: 20px;">
         <a href="{% url 'quest_create' %}" class="cancel-link" style="background-color: #8b0000;">+ New Quest</a>
     </div>
+    {% endif %}
 
     {% for quest in quests %}
         <div class="monster-detail-card" style="margin-bottom: 40px;">
@@ -34,8 +36,13 @@
             </div>
 
             <div class="actions">
-                <a href="{% url 'quest_edit' quest.pk %}" class="cancel-link">Edit</a>
-                <a href="{% url 'quest_delete' quest.pk %}" class="btn-submit" style="text-decoration: none; background-color: #2c241e;">Delete</a>
+                {% if perms.quests.change_quest %}
+                    <a href="{% url 'quest_edit' quest.pk %}" class="cancel-link">Edit</a>
+                {% endif %}
+
+                {% if perms.quests.delete_quest %}
+                    <a href="{% url 'quest_delete' quest.pk %}" class="btn-submit" style="text-decoration: none; background-color: #2c241e;">Delete</a>
+                {% endif %}
             </div>
         </div>
     {% empty %}

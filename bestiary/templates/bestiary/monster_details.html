@@ -36,8 +36,13 @@
     </div>
 
     <div class="actions">
-        <a href="{% url 'edit_monster' monster.pk %}"><button type="button" class="btn-edit">Edit Entry</button></a>
-        <a href="{% url 'delete_monster' monster.pk %}"><button type="button" class="btn-delete">Destroy Record</button></a>
+        {% if perms.bestiary.change_monster %}
+            <a href="{% url 'edit_monster' monster.pk %}"><button type="button" class="btn-edit">Edit Entry</button></a>
+        {% endif %}
+
+        {% if perms.bestiary.delete_monster %}
+            <a href="{% url 'delete_monster' monster.pk %}"><button type="button" class="btn-delete">Destroy Record</button></a>
+        {% endif %}
 
         <a href="{% url 'bestiary_list' %}" class="cancel-link">Return to Bestiary</a>
     </div>

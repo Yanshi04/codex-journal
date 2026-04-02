@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, View
 from .forms import MonsterForm
@@ -19,6 +19,7 @@ class ShowAllMonsters(LoginRequiredMixin, ListView):
         user_choice = self.request.GET.get('sort')
 
         search_word = self.request.GET.get('search_word')
+
         if search_word:
             all_beasts = all_beasts.filter(monster_name__icontains =search_word)
 
@@ -37,11 +38,12 @@ class ShowAllMonsters(LoginRequiredMixin, ListView):
         return context
 
 
-class CreateMonsterPage(LoginRequiredMixin, CreateView):
+class CreateMonsterPage(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Monster
     form_class = MonsterForm
     template_name = 'bestiary/monster_create.html'
     success_url = reverse_lazy('bestiary_list')
+    permission_required = 'bestiary.add_monster'
 
     def form_valid(self, form):
         form.instance.hunter = self.request.user.profile
@@ -57,18 +59,29 @@ class MonsterDetailsPage(LoginRequiredMixin, DetailView):
     model = Monster
     template_name = 'bestiary/monster_details.html'
 
-class EditMonsterPage(LoginRequiredMixin, UpdateView):
+    def get_queryset(self):
+        return Monster.objects.filter(hunter=self.request.user.profile)
+
+class EditMonsterPage(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Monster
     form_class = MonsterForm
     template_name = 'bestiary/monster_edit.html'
+    permission_required = 'bestiary.change_monster'
 
     def get_success_url(self):
         return reverse_lazy('monster_details', kwargs={'pk': self.object.pk})
 
-class DeleteMonsterPage(LoginRequiredMixin, DeleteView):
+    def get_queryset(self):  # Isolated
+        return Monster.objects.filter(hunter=self.request.user.profile)
+
+class DeleteMonsterPage(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Monster
     template_name = 'bestiary/monster_confirm_delete.html'
     success_url = reverse_lazy('bestiary_list')
+    permission_required = 'bestiary.delete_monster'
+
+    def get_queryset(self):  # Isolated
+        return Monster.objects.filter(hunter=self.request.user.profile)
 
 
 class DownloadCSVView(LoginRequiredMixin, View):

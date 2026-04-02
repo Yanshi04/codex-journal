@@ -5,9 +5,11 @@
     <h1>My Bestiary</h1>
 
     <div style="margin-bottom: 30px; display: flex; gap: 20px;">
-        <a href="{% url 'add_monster' %}" style="text-decoration: none;">
-            <button type="button" style="background-color: #4a3728;">Record New Beast</button>
-        </a>
+        {% if perms.bestiary.add_monster %}
+            <a href="{% url 'add_monster' %}" style="text-decoration: none;">
+                <button type="button" style="background-color: #4a3728;">Record New Beast</button>
+            </a>
+        {% endif %}
         <a href="{% url 'download_csv' %}" style="text-decoration: none;">
             <button type="button" style="background-color: #4a3728;">Download All Monster Data</button>
         </a>

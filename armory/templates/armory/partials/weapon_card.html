@@ -7,13 +7,17 @@
 
     {% if request.user == weapon.owner.user %}
         <div style="margin-top: 10px; display: flex; gap: 10px;">
-            <a href="{% url 'weapon_edit' weapon.pk %}">
-                <button type="button" style="background-color: #4a3728; color: white; border: none; padding: 5px 10px; cursor: pointer;">Reforge</button>
-            </a>
+            {% if perms.armory.change_weapon %}
+                <a href="{% url 'weapon_edit' weapon.pk %}">
+                    <button type="button" style="background-color: #4a3728; color: white; border: none; padding: 5px 10px; cursor: pointer;">Reforge</button>
+                </a>
+            {% endif %}
 
-            <a href="{% url 'weapon_delete' weapon.pk %}">
-                <button type="button" style="background-color: #8b0000; color: white; border: none; padding: 5px 10px; cursor: pointer;">Destroy</button>
-            </a>
+            {% if perms.armory.delete_weapon %}
+                <a href="{% url 'weapon_delete' weapon.pk %}">
+                    <button type="button" style="background-color: #8b0000; color: white; border: none; padding: 5px 10px; cursor: pointer;">Destroy</button>
+                </a>
+            {% endif %}
         </div>
     {% endif %}
 </div>
