@@ -5,6 +5,7 @@ from .forms import MonsterForm
 from .models import Monster
 import csv
 from django.http import HttpResponse
+from .tasks import send_witcher_notification
 # from profiles.models import Profile
 # from django.shortcuts import render, redirect, get_object_or_404
 
@@ -44,7 +45,13 @@ class CreateMonsterPage(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.hunter = self.request.user.profile
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        send_witcher_notification.delay(
+            hunter_name=self.request.user.username,
+            monster_name=self.object.monster_name
+        )
+        return response
+
 
 class MonsterDetailsPage(LoginRequiredMixin, DetailView):
     model = Monster

@@ -4,11 +4,13 @@
 <div class="monster-detail-card">
   <h1 class ="beast-title">{{monster.monster_name}}</h1>
   <div class="detail-layout">
-      {% if monster.image_url %}
-        <div class="image-frame">
-          <img src = "{{monster.image_url}}" alt ="{{monster.monster_name }}">
+      <div class="image-frame">
+          {% if monster.image %}
+              <img src="{{ monster.image.url }}" alt="{{ monster.monster_name }}">
+          {% elif monster.image_url %}
+              <img src="{{ monster.image_url }}" alt="{{ monster.monster_name }}">
+          {% endif %}
         </div>
-      {% endif %}
 
       <div class = "stats">
         <h3>Report:</h3>

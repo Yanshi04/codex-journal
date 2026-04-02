@@ -2,7 +2,7 @@
 {% block content %}
 <div class="monster-detail-card">
     <h1 class="beast-title">Edit entry: {{monster.monster_name}}</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <div class="actions">

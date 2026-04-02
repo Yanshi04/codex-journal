@@ -27,5 +27,7 @@ class Monster(models.Model):
     kind = models.ForeignKey(BeastsGroup, on_delete = models.CASCADE, related_name = 'monsters')
     what_to_use = models.ManyToManyField(HowToWin, related_name = 'monsters')
 
+    image = models.ImageField(upload_to='images/monsters/', blank=True, null=True)
+
     def __str__(self):
         return self.monster_name

@@ -3,11 +3,18 @@
 <div class="monster-detail-card">
     <h1 class="beast-title">Hunter Profile</h1>
     <div class="profile-flex-wrapper">
-        {% if profile.profile_pic %}
-            <div class="profile-pic-frame">
-                <img src="{{ profile.profile_pic }}" alt="Profile pic" style="width:150px;">
+        {% if profile.profile_picture %}
+            <div class="image-frame">
+                <img src="{{ profile.profile_picture.url }}" alt="{{ profile.first_name }}"
+                     style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid #4a3728; box-shadow: 2px 2px 8px rgba(0,0,0,0.5);">
+            </div>
+        {% elif profile.profile_pic %}
+            <div class="image-frame">
+                <img src="{{ profile.profile_pic }}" alt="{{ profile.first_name }}"
+                     style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid #4a3728; box-shadow: 2px 2px 8px rgba(0,0,0,0.5);">
             </div>
         {% endif %}
+
         <div class="profile-text-info">
             <p><strong>Name:</strong> {{ profile.first_name }} {{ profile.last_name }}</p>
             <p><strong>Email:</strong> {{ profile.email }}</p>
