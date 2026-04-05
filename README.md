@@ -4,6 +4,15 @@ A system for tracking mythical encounters, species classifications, and combat v
 A Django web application that serves as a dynamic journal for tracking beasts, monsters, and their weaknesses. 
 This project was developed as part of the Django Basics and Django Advanced courses at SoftUni.
 
+## Live Production Site
+The Witcher's Codex is currently deployed and live!
+- URL: http://16.170.113.252/
+- It is hosted on AWS EC2 using an Elastic IP for permanent access.
+- Nginx, acting as a reverse proxy for Gunicorn.
+- New registered users are automatically assigned to the 'Master Witcher' group via Django signals, granting immediate CRUD access to the Bestiary and Armory.
+- To test out groups you should manually use the admin panel and assign the aprentice role to the user.
+
+
 ## Setup
 To run the project locally, please follow these steps:
 
@@ -40,6 +49,7 @@ Update the variables in .env with your local PostgreSQL
 credentials (DB_NAME, DB_USER, DB_PASSWORD).
 
 Provide a valid Redis URL for Celery background tasks by updating CELERY_BROKER_URL and CELERY_RESULT_BACKEND.
+For example, redis://default:YOUR_REDIS_PASSWORD@YOUR_REDIS_ENDPOINT
 
 5) **Initialize**
 
@@ -73,10 +83,14 @@ celery -A codex_project worker --loglevel=info
 
 To access the "Archive" (Admin Page):
 
-URL: `http://127.0.0.1:8000/admin/`
+URL: `http://127.0.0.1:8000/admin/` (Locally) or `http://16.170.113.252/admin/` (Live)
 
 Access: Log in with the superuser credentials you 
 made in the initialize step.
+
+*For live version user the credentials: 
+user: admin
+pwd: SoftuniExamTest
 
 ## Features
 Public Interface: View the home page and bestiary.
