@@ -138,7 +138,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 sentry_sdk.init(
-    dsn="https://161e8effc4b2f406d3eb9cdfc7d69073@o4511157896544256.ingest.de.sentry.io/4511157913256016",
+    dsn=config('SENTRY_DSN', default=''),
     # Add data like request headers and IP for users,
     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,
@@ -174,8 +174,3 @@ CELERY_TIMEZONE = 'UTC'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
-
-sentry_sdk.init(
-    dsn=config('SENTRY_DSN', default=''),
-    send_default_pii=True,
-)
