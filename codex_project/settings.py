@@ -174,3 +174,8 @@ CELERY_TIMEZONE = 'UTC'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
+
+sentry_sdk.init(
+    dsn=config('SENTRY_DSN', default=''),
+    send_default_pii=True,
+)
