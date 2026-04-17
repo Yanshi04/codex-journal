@@ -88,10 +88,6 @@ URL: `http://127.0.0.1:8000/admin/` (Locally) or `http://16.170.113.252/admin/` 
 Access: Log in with the superuser credentials you 
 made in the initialize step.
 
-*For the purposes of this exam evaluation, a temporary account has been provisioned on the live server so the assessor can verify the Admin panel, user groups, and permissions:
-user: evaluator
-pwd: SoftuniExam2026!
-
 ## Features
 Public Interface: View the home page and bestiary.
 
