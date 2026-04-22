@@ -83,7 +83,7 @@ celery -A codex_project worker --loglevel=info
 
 To access the "Archive" (Admin Page):
 
-URL: `http://127.0.0.1:8000/admin/` (Locally) or `http://16.170.113.252/admin/` (Live)
+URL: `http://127.0.0.1:8000/admin/` (Locally) 
 
 Access: Log in with the superuser credentials you 
 made in the initialize step.
