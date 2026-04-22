@@ -21,7 +21,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('common.urls')),
     path('profile/', include('profiles.urls')),
     path('bestiary/', include('bestiary.urls')),
@@ -32,6 +31,11 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='jwt_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='jwt_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('admin/', admin.site.urls),
+    ]
 
 handler404 = 'common.views.custom_404'
 handler500 = 'common.views.custom_500'
